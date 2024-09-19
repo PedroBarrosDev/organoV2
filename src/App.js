@@ -6,7 +6,7 @@ import Rodape from './componentes/Rodape';
 
 function App() {
 
-  const times = [
+  const [times, setTimes] = useState([
     {
       nome: 'Programação',
       corPrimaria: '#57C278',
@@ -42,9 +42,30 @@ function App() {
       corPrimaria: '#ff8a29',
       corSecundaria: '#ffeedf'
     }
-  ]
+  ]);
 
-  const [colaboradores, setColaboradores] = useState([])
+const inicial = [
+  {
+    nome: 'Pedro Barros',
+    cargo: 'Dono',
+    imagem: 'https://github.com/PedroBarrosDev.png',
+    time: times[0].nome
+  },
+  {
+    nome: 'Pedro Barros',
+    cargo: 'Dono',
+    imagem: 'https://github.com/PedroBarrosDev.png',
+    time: times[1].nome
+  },
+  {
+    nome: 'Pedro Castro',
+    cargo: 'Chefe',
+    imagem: 'https://github.com/pedrocastrovs.png',
+    time: times[0].nome
+  }
+]
+
+  const [colaboradores, setColaboradores] = useState(inicial)
 
   const aoNovoColaboradorAdicionado = (colaborador) => {
     setColaboradores([...colaboradores, colaborador])
@@ -52,6 +73,15 @@ function App() {
 
   function deletarColaborador() {
 
+  }
+
+  function mudarCorDoTime(cor, nome) {
+    setTimes(times.map(time => {
+      if(time.nome === nome) {
+        time.corPrimaria = cor;
+      }
+      return time;
+    }))
   }
 
   return (
@@ -62,7 +92,9 @@ function App() {
       aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}
       />
       <Rodape />
-      {times.map(time => <Time 
+      {times.map(time => 
+      <Time 
+        mudarCor={mudarCorDoTime}
         key={time.nome} 
         nome={time.nome} 
         corPrimaria={time.corPrimaria} 
